@@ -1,0 +1,104 @@
+{% extends "base.html" %} {% block title %}Food Selector{% endblock %} {% block content
+%}
+<style>
+
+  .home{
+    font-family: 'Courier New';
+  }
+
+  .header {
+    font-family: 'Courier';
+    font-weight: bold;
+    color: white;
+  }
+</style>
+
+<div class = 'container-fluid home'>
+  <br><br>
+  <h1 align="center" class='header'>Food Selector</h1>
+  <br><br>
+    <div class="row" align="center">
+      <div class="col-md-6">
+        <h2 class='header' align="center">Choose your Cuisine</h2>
+        <br>
+        <input id="cuisine_selected" type='text' value="" /> 
+        <button id="button" class="btn btn-success generate_cuisine">Generate</button>
+      </div>
+      <div class="col-md-6">
+        <h2 class='header' align="center">Choose your Store</h2>
+        <br>
+        <input id="store_selected" value="" />  
+        <button id="button" class="btn btn-success generate_store">Generate</button>
+      </div>
+    <br><br><br><br><br><br><br>
+  </div>
+
+  <form method="POST">
+    <div class="row">
+      <div class="col-md-6">
+        <h3 class='header'> Add a Cuisine</h3>
+        <select id="cuisines" name="cuisines" width="600px">
+          <option SELECTED value="0">Available cuisines</option>
+          {% for cuisine in user.cuisines %}
+            <option id="cuisine_list" value= '{{ cuisine.data }}'>{{cuisine.data}}</option>
+          {% endfor %}
+        </select>
+        
+        <br>
+        <textarea name="cuisine" id="cuisine" class="form-control" width="600px"></textarea>
+        <br />
+      </div>
+
+      <div class="col-md-6">
+        <h3 class='header'> Add a Store</h3>
+        <select id="stores" name="stores" width="600px" align="right">
+          
+          <option SELECTED value="0">Available stores</option>
+          {% for store in user.stores %}
+            <option value= '{{ store.data }} - {{ store.cuisine_type }}'>{{ store.data }} - {{ store.cuisine_type }}</option>
+          {% endfor %}
+        </select >
+
+        
+        <br>
+          <textarea name="store" id="store" class="form-control"></textarea>
+          <br>
+          <div class='row'>
+            <div align="left" class="col-md-6">
+              <select id="cuisine_type" name="cuisine_type" width="400px">
+                <option SELECTED value="0">Type of Cuisine</option>
+                {% for cuisine in user.cuisines %}
+                  <option id="cuisine_list" value= '{{ cuisine.data }}'>{{cuisine.data}}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div align="right" class="col-md-6">
+              <button type="submit" class="btn btn-primary">Add Cuisine/Store</button>
+            </div>
+          </div>
+
+      </div>
+    </div>
+  </form>
+</div>
+
+<script>
+  // document.addEventListener('DOMContentLoaded', () => {
+
+    document.querySelector('.generate_cuisine').onclick = () => {
+
+      var cuisine_options = document.getElementById('cuisines')
+      document.querySelector('#cuisine_selected').value = cuisine_options[Math.floor(Math.random() * (cuisine_options.length) + 1)].innerHTML
+      return false;
+    };
+
+    document.querySelector('.generate_store').onclick = () => {
+
+      var store_options = document.getElementById('stores')
+      document.querySelector('#store_selected').value = store_options[Math.floor(Math.random() * (store_options.length) + 1)].innerHTML
+      return false;
+    };
+
+  // });
+</script>
+{% endblock %}
