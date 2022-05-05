@@ -15,7 +15,7 @@ def home():
         cuisine_type = request.form.get('cuisine_type')
         if cuisine_type == 0:
             cuisine_type = 'None'
-
+        print(db.session.query())
         if len(cuisine) < 1:
             pass 
         else:
